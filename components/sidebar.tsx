@@ -18,6 +18,8 @@ import {
   MdFavorite,
 } from "react-icons/md";
 
+import SidebarMenu from "./sidebarMenu";
+
 const navMenu = [
   {
     name: "Home",
@@ -36,6 +38,21 @@ const navMenu = [
   },
 ];
 
+const musicMenu = [
+  {
+    name: "Create Playlist",
+    icon: MdPlaylistAdd,
+    route: "/",
+  },
+  {
+    name: "Favorites",
+    icon: MdFavorite,
+    route: "/favorites",
+  },
+];
+
+const mockPlaylist = new Array(30).fill(1).map((_, i) => `Playlist ${i + 1}`);
+
 const Sidebar = () => {
   return (
     <Box
@@ -45,27 +62,30 @@ const Sidebar = () => {
       color="gray"
       paddingX="5px"
     >
-      <Box paddingY="20px">
+      <Box paddingY="20px" height="100%">
         <Box width="120px" marginBottom="20px" paddingX="20px" paddingY="15px">
           <NextImage src="/logo.svg" width={120} height={60} />
         </Box>
         <Box marginBottom="20px">
           <List spacing={2}>
             {navMenu.map((menu) => (
-              <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
-                <LinkBox>
-                  <NextLink href={menu.route} passHref>
-                    <LinkOverlay>
-                      <ListIcon
-                        as={menu.icon}
-                        color="white"
-                        marginRight="20px"
-                      />
-                      {menu.name}
-                    </LinkOverlay>
-                  </NextLink>
-                </LinkBox>
-              </ListItem>
+              <SidebarMenu menu={menu} />
+            ))}
+          </List>
+        </Box>
+        <Box marginTop="20px">
+          <List spacing={2}>
+            {musicMenu.map((menu) => (
+              <SidebarMenu menu={menu} />
+            ))}
+          </List>
+        </Box>
+        <Divider color="gray.800" />
+        {/* FIXME: Scroll has to be nicely designed */}
+        <Box height="66%" overflowY="auto" paddingY="20px">
+          <List spacing={2}>
+            {mockPlaylist.map((playlist) => (
+              <SidebarMenu menu={playlist} />
             ))}
           </List>
         </Box>
