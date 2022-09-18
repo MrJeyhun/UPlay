@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const salt = bcrypt.genSaltSync();
     const {email, password } = req.body;
 
-    let user
+    let user;
 
     try {
         user = await prisma.user.create({
@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 password: bcrypt.hashSync(password, salt)
             },
         })
-    } catch (error) {
+    } catch (e) {
         res.status(401);
         res.json({error: "User already exists"})
         return;
@@ -27,12 +27,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         {
             email: user.email,
             id: user.id,
-            time: Date.now()
+            time: Date.now(),
         }, 
-        "Hello",
-        {
-            expiresIn: '8h'
-        }
+        'hello',
+        {expiresIn: '8h'}
     )
 
     res.setHeader(
@@ -43,9 +41,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             path: '/',
             // will allow the user to maintain a logged in status while arriving from an external link
             sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production'
+            secure: process.env.NODE_ENV === 'production',
         })
     )
 
-    res.json(user);
+    res.json(user)
 }

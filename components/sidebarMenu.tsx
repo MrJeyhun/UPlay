@@ -4,7 +4,7 @@ import { ListItem, LinkBox, LinkOverlay, ListIcon } from "@chakra-ui/layout";
 
 const SidebarMenu = ({ menu }) => {
   return (
-    <ListItem paddingX="20px" fontSize="16px" key={menu.name}>
+    <ListItem paddingX="20px" fontSize="16px" key={menu.id}>
       <LinkBox>
         <NextLink href={menu.route ? menu.route : "/"} passHref>
           <LinkOverlay>
