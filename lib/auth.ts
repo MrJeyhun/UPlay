@@ -4,15 +4,16 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export const validateRoute = (handler) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
-        const { UPLAY_ACCESS_TOKEN: token } = req.cookies;
+        const token = req.cookies.UPLAY_ACCESS_TOKEN
+        console.log("token in here:" , token)
 
         if (token) {
             let user;
 
             try {
-                const {id} = jwt.verify(token, 'Hello');
+                const { id } = jwt.verify(token, 'hello');
                 user = await prisma.user.findUnique({
-                    where: {id},
+                    where: { id },
                 })
 
                 if (!user) {
@@ -23,10 +24,9 @@ export const validateRoute = (handler) => {
                 res.json({error: 'Not authorized'});
                 return;
             }
-
             return handler(req, res, user);
         }
-        
+        //TODO: if token doesn't exist route to auth page
         res.status(401);
         res.json({error: 'Not authorized'});
     }

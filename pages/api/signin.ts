@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const user = await prisma.user.findUnique({
         where: {
             email,
-        }
+        },
     })
 
     if (user && bcrypt.compareSync(password, user.password)) {
@@ -18,9 +18,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             {
                 id: user.id,
                 email: user.email,
-                time: Date.now()
+                time: Date.now(),
             },
-            'Hello',
+            'hello',
             {
                 expiresIn: '8h'
             }
@@ -37,8 +37,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 secure: process.env.NODE_ENV === 'production'
             })
         )
-
         res.json(user)
+
     } else {
         res.status(401);
         res.json({error: "Invalid email or password"});

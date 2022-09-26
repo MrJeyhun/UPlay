@@ -18,6 +18,7 @@ import {
   MdFavorite,
 } from "react-icons/md";
 
+import { usePlaylist } from "../lib/hooks";
 import SidebarMenu from "./sidebarMenu";
 
 const navMenu = [
@@ -51,9 +52,9 @@ const musicMenu = [
   },
 ];
 
-const mockPlaylist = new Array(30).fill(1).map((_, i) => `Playlist ${i + 1}`);
-
 const Sidebar = () => {
+  const { playlists } = usePlaylist();
+
   return (
     <Box
       width="100%"
@@ -84,7 +85,7 @@ const Sidebar = () => {
         {/* FIXME: Scroll has to be nicely designed */}
         <Box height="66%" overflowY="auto" paddingY="20px">
           <List spacing={2}>
-            {mockPlaylist.map((playlist) => (
+            {playlists.map((playlist) => (
               <SidebarMenu menu={playlist} />
             ))}
           </List>
