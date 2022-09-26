@@ -26,7 +26,7 @@ export const validateRoute = (handler) => {
             }
             return handler(req, res, user);
         }
-        
+        //TODO: if token doesn't exist route to auth page
         res.status(401);
         res.json({error: 'Not authorized'});
     }
