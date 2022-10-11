@@ -5,7 +5,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export const validateRoute = (handler) => {
     return async (req: NextApiRequest, res: NextApiResponse) => {
         const token = req.cookies.UPLAY_ACCESS_TOKEN
-        console.log("token in here:" , token)
 
         if (token) {
             let user;
@@ -24,10 +23,15 @@ export const validateRoute = (handler) => {
                 res.json({error: 'Not authorized'});
                 return;
             }
-            return handler(req, res, user);
+            return handler(res, req, user);
         }
         //TODO: if token doesn't exist route to auth page
         res.status(401);
         res.json({error: 'Not authorized'});
     }
+}
+
+export const validateToken = (token) => {
+    const user = jwt.verify(token, 'hello');
+    return user;
 }
