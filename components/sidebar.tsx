@@ -86,7 +86,7 @@ const Sidebar = () => {
         <Box height="66%" overflowY="auto" paddingY="20px">
           <List spacing={2}>
             {playlists.map((playlist) => (
-              <SidebarMenu menu={playlist} />
+              <SidebarMenu menu={playlist} isPlaylist={true} />
             ))}
           </List>
         </Box>
