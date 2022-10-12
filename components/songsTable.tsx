@@ -3,6 +3,8 @@ import { BsFillPlayFill } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { Table, Thead, Tbody, Td, Tr, Th, IconButton } from "@chakra-ui/react";
 
+import { formatDate, formatTime } from "../lib/formatter";
+
 const SongTable = ({ songs }) => {
   return (
     <Box bg="transparent" color="white">
@@ -30,7 +32,7 @@ const SongTable = ({ songs }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {songs.map((song, i) => {
+            {songs.map((song, i) => (
               <Tr
                 sx={{
                   transition: "all .3s",
@@ -43,10 +45,10 @@ const SongTable = ({ songs }) => {
               >
                 <Td>{i + 1}</Td>
                 <Td>{song.name}</Td>
-                <Td>{song.createdAt.toString()}</Td>
-                <Td>{song.duration}</Td>
+                <Td>{formatDate(song.createdAt)}</Td>
+                <Td>{formatTime(song.duration)}</Td>
               </Tr>
-            })}
+            ))}
           </Tbody>
         </Table>
       </Box>
