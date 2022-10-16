@@ -1,6 +1,9 @@
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "reset-css";
+import { StoreProvider } from "easy-peasy";
+
 import PlayerLayout from "../components/playerLayout";
+import { store } from "../lib/store";
 
 //TODO: Move it to styles
 const theme = extendTheme({
@@ -34,13 +37,16 @@ const theme = extendTheme({
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
-      {Component.authPage ? (
-        <Component {...pageProps} />
-      ) : (
-        <PlayerLayout>
+      {/* @ts-ignore */}
+      <StoreProvider store={store}>
+        {Component.authPage ? (
           <Component {...pageProps} />
-        </PlayerLayout>
-      )}
+        ) : (
+          <PlayerLayout>
+            <Component {...pageProps} />
+          </PlayerLayout>
+        )}
+      </StoreProvider>
     </ChakraProvider>
   );
 }
